@@ -1,5 +1,11 @@
 # Manual audit of the code
 
+## Common issues
+1. Migrations is not properly working and run with exceptions.
+2. Migration flow is not covered by integration tests.
+3. All contracts is merged `onefile.sol` manually, but this contract is not covered by test cases.
+4. `gasPrice: 4 * 10**9 // 4 gwei` could be not enough to deploy contracts in the live network. Recommended value is 21-24 gwei.  
+
 ## CREDToken.sol
 
 | Lines      | Code sample                                                     | Issue                                                                                                                                                                                  | Priority |
@@ -15,3 +21,15 @@
 
 
 ## Tokensale.sol
+
+| Lines    | Code sample                                                                           | Issue                                                                                                            | Priority |
+|----------|---------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|----------|
+| 13-19    | uint256 constant public MAX_SUPPLY = 50000000 * 10 ** 18;                             | Token decimals could be taken from the constant.                                                                 | Low      |
+| 23       | uint256 public soldDuringTokensale;                                                   | Variable is not used                                                                                             | Low      |
+| 30       | event Prepurchased(address indexed recipient, uint256 etherPaid, uint256 tokensSold); | Event is not used                                                                                                | Low      |
+| 58       | token = new CREDToken                                                                 | Crowdsale contract will be the owner of the token. Possible tokens lost.                                         | Medium   |
+| 76       | rate = SALE_TOKENS_SUPPLY.div(_cap);                                                  | Token price is dependent on the hardcap. It would be better to separate the price and hardcap in business logic. | Low      |
+| 83       | for (uint256 i = 0; i < _wallets.length; i++) {                                       | Possible "out of gas" issue.                                                                                     | Low      |
+| 98       | function finalise() public                                                            | Method could be called by anyone. Add onlyOwner modifier.                                                        | High     |
+| 126, 136 | return validSalePurchase() || validPreSalePurchase();                                 | Remove dependency of conditions order.                                                                           | Medium   |
+
