@@ -31,5 +31,5 @@
 | 76       | rate = SALE_TOKENS_SUPPLY.div(_cap);                                                  | Token price is dependent on the hardcap. It would be better to separate the price and hardcap in business logic. | Low      |
 | 83       | for (uint256 i = 0; i < _wallets.length; i++) {                                       | Possible "out of gas" issue.                                                                                     | Low      |
 | 98       | function finalise() public                                                            | Method could be called by anyone. Add onlyOwner modifier.                                                        | High     |
-| 126, 136 | `return validSalePurchase() || validPreSalePurchase();`                               | Remove dependency of conditions order.                                                                           | Medium   |
+| 126, 136 | return validSalePurchase()                                                            | Remove dependency of conditions order.                                                                           | Medium   |
 
