@@ -1,5 +1,7 @@
 # CREDD Smart Contract Audit
 
+#### [TokenSale Page](https://verify.as/sale)
+
 #### [Smart Contract](https://github.com/ibininja/smartcont/)
 
 [1. Build log](./audit/1_build_log.md)  
